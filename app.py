@@ -72,15 +72,14 @@ def add_result(id):
 def kawaii(id, api=None):
     button = g.db.buttons.find({"_id": id});
     name = button.name;
-    urls = button.images; 
-    text = u"%sちゃんかわいい via %sちゃんかわいいぼたん http://rikka.contents4you.com/%s %s" % (name, name, name, urls[random.randint(0, len(urls) - 1)]) + u"　" * random.randint(0, 20)
+    text = u"%sちゃんかわいい via %sちゃんかわいいぼたん http://rikka.contents4you.com/%s" % (name, name, id) + u"　" * random.randint(0, 20)
     api.update_status(text);
-    return redirect("/");
+    return redirect("/" + str(id));
 
 @app.route("/twitter/callback")
 @twitter_callback
 def callback(api=None):
-    return make_response("test");
+    return make_response(redirect("/"));
 
 if __name__ == "__main__":
     app.debug = True;
